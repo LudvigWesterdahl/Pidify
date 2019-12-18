@@ -1,0 +1,1572 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Pidify</name>
+    </assembly>
+    <members>
+        <member name="T:Pidify.Area">
+            <summary>
+            Container type for <see cref="T:Pidify.IPlottable"/> instances that is used to define an area
+            on the page that they are plotted inside.
+            </summary>
+        </member>
+        <member name="M:Pidify.Area.NewInstance(Pidify.Utils.PointPair,System.Int32)">
+            <summary>
+            Creates a new Area defined by the box on the specified page.
+            </summary>
+            <param name="box">the area that the plottables will be plotted in</param>
+            <param name="page">the page on the pdf</param>
+            <returns>new Area instance</returns>
+        </member>
+        <member name="M:Pidify.Area.AddPlottable(Pidify.IPlottable)">
+            <summary>
+            Adds a IPlottable.
+            </summary>
+            <param name="plottable">the plottable to add</param>
+            <returns>this instance for chaining</returns>
+        </member>
+        <member name="M:Pidify.Area.Draw(Pidify.ICanvasConfig)">
+            <summary>
+            Draws all the added <see cref="T:Pidify.IPlottable"/> instances.
+            </summary>
+            <param name="canvasConfig">the canvas config use to get the canvas for drawing</param>
+        </member>
+        <member name="M:Pidify.Area.DrawBoxed(Pidify.ICanvasConfig)">
+            <summary>
+            Draws all the added <see cref="T:Pidify.IPlottable"/> instances then a black border around this area.
+            </summary>
+            <param name="canvasConfig">the canvas config use to get the canvas for drawing</param>
+        </member>
+        <member name="T:Pidify.ICanvas">
+            <summary>
+            A type that knows how to create PDF.
+            </summary>
+        </member>
+        <member name="M:Pidify.ICanvas.GetCurrentDrawingSpace">
+            <summary>
+            Returns the absolute drawing space in pixels.
+            Returns the current drawing box.
+            This information can be used to calculate some percentage values if needed.
+            </summary>
+            <returns>the drawing space</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.GetTextWidth(System.String)">
+            <summary>
+            Returns the width of the specified text (0-1) with the set font.
+            </summary>
+            <param name="text">the text to measure</param>
+            <returns>the width in percentage</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.GetTextHeight(System.String)">
+            <summary>
+            Returns the height of the specified text (0-1) with the set font.
+            </summary>
+            <param name="text">the text to measure</param>
+            <returns>the height in percentage</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.GetImageHeight(System.Drawing.Bitmap)">
+            <summary>
+            Returns the height of the image (0-1).
+            </summary>
+            <param name="pngImage">the image</param>
+            <returns>the height</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.GetImageWidthHeightRatio(System.String)">
+            <summary>
+            Returns the width height ratio of the specified image (width divided by height).
+            </summary>
+            <param name="imageFile">the file path to the image</param>
+            <returns>the width height ratio of the image</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.GetImageWidthHeightRatio(System.Drawing.Bitmap)">
+            <summary>
+            Returns the width height ratio of the specified image (width divided by height).
+            </summary>
+            <param name="pngImage">the PNG image</param>
+            <returns>the width height ratio of the image</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.GetThicknessWidth(System.Single)">
+            <summary>
+            Returns the width of the specified thickness (0-1) in the current drawing space.
+            </summary>
+            <param name="thickness">the thickness to convert</param>
+            <returns>the thickness width</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.GetThicknessHeight(System.Single)">
+            <summary>
+            Returns the height of the specified thickness (0-1) in the current drawing space.
+            </summary>
+            <param name="thickness">the thickness to convert</param>
+            <returns>the thickness height</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.SetColor(System.Drawing.Color)">
+            <summary>
+            Sets the color used when writing text and drawing lines.
+            </summary>
+            <param name="color">the color to use</param>
+            <returns>this canvas for chaining</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.SetFont(Pidify.Utils.FontType,System.Drawing.FontStyle,System.Single)">
+            <summary>
+            Sets the font used when writing text.
+            </summary>
+            <param name="fontType">the type of font</param>
+            <param name="fontStyle">the style of the font</param>
+            <param name="fontSize">the font size</param>
+            <returns>this canvas for chaining</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.WriteText(System.String,System.Single,System.Single)">
+            <summary>
+            Writes text at the given position as the lower left corner.
+            </summary>
+            <param name="text">the text to write</param>
+            <param name="x">the start x coordinate; lower left corner</param>
+            <param name="y">the start y coordinate; lower left corner</param>
+            <returns>this canvas for chaining</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.DrawLine(Pidify.Utils.PointPair,System.Single,System.Single)">
+            <summary>
+            Draws a line between two points.
+            </summary>
+            <param name="line">the <see cref="T:Pidify.Utils.PointPair"/> defining the line</param>
+            <param name="thickness">the thickness of the line</param>
+            <param name="unitsOn">percentage of line filled, rest is space (dash); 0-1</param>
+            <returns>this canvas for chaining</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.DrawImage(System.String,Pidify.Utils.PointPair)">
+            <summary>
+            Draws an image in the box specified by the arguments.
+            </summary>
+            <param name="imageFile">the image file path</param>
+            <param name="box">the <see cref="T:Pidify.Utils.PointPair"/> defining the area to draw the image</param>
+            <returns>this canvas for chaining</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.DrawImage(System.Drawing.Bitmap,Pidify.Utils.PointPair)">
+            <summary>
+            Draws an PNG image in the box specified by the arguments.
+            </summary>
+            <param name="pngImage">the image in PNG format</param>
+            <param name="box">the <see cref="T:Pidify.Utils.PointPair"/> defining the area to draw the image</param>
+            <returns>this canvas for chaining</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.DrawRectangle(Pidify.Utils.PointPair)">
+            <summary>
+            Draws a filled rectangle in the specified rect.
+            </summary>
+            <param name="rect">the rectangle</param>
+            <returns>this canvas for chaining</returns>
+        </member>
+        <member name="M:Pidify.ICanvas.DrawRectangle(Pidify.Utils.PointPair,System.Single,System.Single)">
+            <summary>
+            Draws an rectangle border around the specified rect.
+            </summary>
+            <param name="rect">the rectangle</param>
+            <param name="thickness">the thickness</param>
+            <param name="unitsOn">percentage of line filled, rest is space (dash); 0-1</param>
+            <returns>this canvas for chaining</returns>
+        </member>
+        <member name="T:Pidify.Canvases.PdfSharpCanvas">
+            <summary>
+            Implementation of <see cref="T:Pidify.ICanvasConfig"/> and <see cref="T:Pidify.ICanvas"/> using PdfSharp.
+            </summary>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.AddPage(System.Int32)">
+            <inheritdoc cref="T:Pidify.ICanvasConfig"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.GetPagesIds">
+            <inheritdoc cref="T:Pidify.ICanvasConfig"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.UsePage(System.Int32)">
+            <inheritdoc cref="T:Pidify.ICanvasConfig"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.UsePageArea(Pidify.Utils.PointPair,System.Int32)">
+            <inheritdoc cref="T:Pidify.ICanvasConfig"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.End(System.String)">
+            <inheritdoc cref="T:Pidify.ICanvasConfig"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.GetCurrentDrawingSpace">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.GetTextWidth(System.String)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.GetTextHeight(System.String)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.GetImageHeight(System.Drawing.Bitmap)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.GetImageWidthHeightRatio(System.String)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.GetImageWidthHeightRatio(System.Drawing.Bitmap)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.GetThicknessWidth(System.Single)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.GetThicknessHeight(System.Single)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.SetColor(System.Drawing.Color)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.SetFont(Pidify.Utils.FontType,System.Drawing.FontStyle,System.Single)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.WriteText(System.String,System.Single,System.Single)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.DrawLine(Pidify.Utils.PointPair,System.Single,System.Single)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.DrawImage(System.String,Pidify.Utils.PointPair)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.DrawImage(System.Drawing.Bitmap,Pidify.Utils.PointPair)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.DrawRectangle(Pidify.Utils.PointPair)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="M:Pidify.Canvases.PdfSharpCanvas.DrawRectangle(Pidify.Utils.PointPair,System.Single,System.Single)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="T:Pidify.ICanvasConfig">
+            <summary>
+            A type that knows how to configure a <see cref="T:Pidify.ICanvas"/> for creating PDFs.
+            </summary>
+        </member>
+        <member name="M:Pidify.ICanvasConfig.AddPage(System.Int32)">
+            <summary>
+            Adds a new page with the specified ID at the end of the document.
+            </summary>
+            <param name="pageId">the id of the page</param>
+            <returns>true if created, false if already exists.</returns>
+        </member>
+        <member name="M:Pidify.ICanvasConfig.GetPagesIds">
+            <summary>
+            Returns all page IDs.
+            </summary>
+            <returns>all page IDs</returns>
+        </member>
+        <member name="M:Pidify.ICanvasConfig.UsePage(System.Int32)">
+            <summary>
+            Returns a <see cref="T:Pidify.ICanvas"/> which draws on the full page.
+            </summary>
+            <param name="pageId">the id of the page</param>
+            <returns>canvas to draw on</returns>
+        </member>
+        <member name="M:Pidify.ICanvasConfig.UsePageArea(Pidify.Utils.PointPair,System.Int32)">
+            <summary>
+            Returns a <see cref="T:Pidify.ICanvas"/> which only draws inside the specified area on the page.
+            </summary>
+            <param name="box">the area on the page</param>
+            <param name="pageId">the id of the page</param>
+            <returns>canvas to draw on</returns>
+        </member>
+        <member name="M:Pidify.ICanvasConfig.End(System.String)">
+            <summary>
+            Creates the PDF with the specified filepath.
+            </summary>
+            <param name="file">the path and name of the PDF</param>
+            <returns>true if successful, false otherwise</returns>
+        </member>
+        <member name="T:Pidify.IPlottable">
+            <summary>
+            A type that can plot itself on a <see cref="T:Pidify.ICanvas"/>.
+            </summary>
+        </member>
+        <member name="M:Pidify.IPlottable.Plot(Pidify.ICanvas)">
+            <summary>
+            Plot this IPlottable on the canvas.
+            </summary>
+            <param name="canvas">the canvas to plot on</param>
+        </member>
+        <member name="T:Pidify.Plottables.CommentsPlottable">
+            <summary>
+            Plots a title and comment lines for humans to write on.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.LineSpacing">
+            <summary>
+            The space between the lines.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.Title">
+            <summary>
+            The title above the lines to the left.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.TextInfo">
+            <summary>
+            The text information of the title.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.NumLines">
+            <summary>
+            The number of lines.
+            </summary>
+        </member>
+        <member name="F:Pidify.Plottables.CommentsPlottable.LineWidth">
+            <summary>
+            The width of the lines.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.LineInfo">
+            <summary>
+            The line information.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.StartAt">
+            <summary>
+            The start position of the title if exists, otherwise the first line.
+            </summary>
+        </member>
+        <member name="T:Pidify.Plottables.CommentsPlottable.Builder">
+            <summary>
+            Builder class to create <see cref="T:Pidify.Plottables.CommentsPlottable"/> instances.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.Builder.LineSpacing">
+            <summary>
+            The space between the lines.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.Builder.Title">
+            <summary>
+            The title above the lines to the left.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.Builder.TextInfo">
+            <summary>
+            The text information of the title.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.Builder.NumLines">
+            <summary>
+            The number of lines.
+            </summary>
+        </member>
+        <member name="F:Pidify.Plottables.CommentsPlottable.Builder.LineWidth">
+            <summary>
+            The width of the lines.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.Builder.LineInfo">
+            <summary>
+            The line information.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.CommentsPlottable.Builder.StartAt">
+            <summary>
+            The start position of the title if exists, otherwise the first line.
+            </summary>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.Builder.#ctor(System.Single,System.String,Pidify.Utils.TextInfo)">
+            <summary>
+            Private constructor.
+            </summary>
+            <param name="lineSpacing">the space between the lines</param>
+            <param name="title">the title; if empty no title is used</param>
+            <param name="textInfo">the font information of the title</param>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.Builder.NewInstance(System.Single)">
+            <summary>
+            Returns a new Builder instance without a title.
+            </summary>
+            <param name="lineSpacing">the space between the lines</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.Builder.NewInstance(System.Single,System.String,Pidify.Utils.TextInfo)">
+            <summary>
+            Returns a new Builder instance with the title to the left of the comment lines. One lineSpacing will be
+            added under the title before the first line.
+            </summary>
+            <param name="lineSpacing">the space between the lines</param>
+            <param name="title">the title; if empty no title is used</param>
+            <param name="textInfo">the font information of the title</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.Builder.SetLines(System.Int32)">
+            <summary>
+            Sets the number of lines. This will result in crash if they cannot fit. Give -1 to mean as many as possible.
+            <para>
+            Defaults to -1 and a .5 thickness line with RGB(66, 66, 66) with width of 1f.
+            </para>
+            </summary>
+            <param name="numLines">the number of lines</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.Builder.SetLines(System.Int32,System.Single)">
+            <summary>
+            Sets the number of lines. This will result in crash if they cannot fit. Give -1 to mean as many as possible.
+            <para>
+            Defaults to -1 and a .5 thickness line with RGB(66, 66, 66) with width of 1f.
+            </para>
+            </summary>
+            <param name="numLines">the number of lines</param>
+            <param name="lineWidth">the width of the lines</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.Builder.SetLines(System.Int32,System.Single,Pidify.Utils.LineInfo)">
+            <summary>
+            Sets the number of lines. This will result in crash if they cannot fit. Give -1 to mean as many as possible.
+            <para>
+            Defaults to -1 and a .5 thickness line with RGB(66, 66, 66) with width of 1f.
+            </para>
+            </summary>
+            <param name="numLines">the number of lines</param>
+            <param name="lineWidth">the width of the lines</param>
+            <param name="lineInfo">the line info</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.Builder.SetStartAt(System.Single,System.Single)">
+            <summary>
+            Sets the start position of the upper left corner of the title if it exists or the first line if no title.
+            <para>
+            Defaults to (0, 0).
+            </para>
+            </summary>
+            <param name="x">the x position of the upper left corner</param>
+            <param name="y">the y position of the upper left corner</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.Builder.Build">
+            <summary>
+            Returns a new <see cref="T:Pidify.Plottables.CommentsPlottable"/> from this Builder.
+            </summary>
+            <returns>new CommentsPlottable instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.#ctor(Pidify.Plottables.CommentsPlottable.Builder)">
+            <summary>
+            Private constructor.
+            </summary>
+            <param name="builder">the Builder instance</param>
+        </member>
+        <member name="M:Pidify.Plottables.CommentsPlottable.Plot(Pidify.ICanvas)">
+            <inheritdoc cref="T:Pidify.IPlottable"/>
+        </member>
+        <member name="T:Pidify.Plottables.GraphPlottable">
+            <summary>
+            Plots a graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Lines">
+            <summary>
+            Gets the lines plotted.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.NumMarkersAxisX">
+            <summary>
+            Gets the number of markers on the x-axis.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.NumMarkersAxisY">
+            <summary>
+            Gets the number of markers on the y-axis.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Grid">
+            <summary>
+            Gets the grid.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.NumVertical">
+            <summary>
+            Gets the number of vertical grid lines.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.NumHorizontal">
+            <summary>
+            Gets the number of horizontal grid lines.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.AgainstMarkersX">
+            <summary>
+            Gets if the vertical grid lines should be against the markers on the x-axis.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.AgainstMarkersY">
+            <summary>
+            Gets if the horizontal grid lines should be against the markers on the y-axis.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Background">
+            <summary>
+            Gets the background of the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Border">
+            <summary>
+            Gets the border of the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.AxisLimitX">
+            <summary>
+            Gets the x-axis limits.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.AxisLimitY">
+            <summary>
+            Gets the y-axis limits.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Legends">
+            <summary>
+            Gets the legends in the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.HorizontalLines">
+            <summary>
+            Gets the horizontal lines in the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.VerticalLines">
+            <summary>
+            Gets the vertical lines in the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.HorizontalFill">
+            <summary>
+            Gets the horizontal fillers in the graph.
+            </summary>
+        </member>
+        <member name="T:Pidify.Plottables.GraphPlottable.Builder">
+            <summary>
+            Builder class to create <see cref="T:Pidify.Plottables.GraphPlottable"/> instances.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.Lines">
+            <summary>
+            Gets the lines plotted.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.NumMarkersAxisX">
+            <summary>
+            Gets the number of markers on the x-axis.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.NumMarkersAxisY">
+            <summary>
+            Gets the number of markers on the y-axis.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.Grid">
+            <summary>
+            Gets the grid.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.NumVertical">
+            <summary>
+            Gets the number of vertical grid lines.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.NumHorizontal">
+            <summary>
+            Gets the number of horizontal grid lines.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.AgainstMarkersX">
+            <summary>
+            Gets if the vertical grid lines should be against the markers on the x-axis.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.AgainstMarkersY">
+            <summary>
+            Gets if the horizontal grid lines should be against the markers on the y-axis.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.Background">
+            <summary>
+            Gets the background of the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.Border">
+            <summary>
+            Gets the border of the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.AxisLimitX">
+            <summary>
+            Gets the x-axis limits.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.AxisLimitY">
+            <summary>
+            Gets the y-axis limits.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.Legends">
+            <summary>
+            Gets the legends in the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.HorizontalLines">
+            <summary>
+            Gets the horizontal lines in the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.VerticalLines">
+            <summary>
+            Gets the vertical lines in the graph.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.GraphPlottable.Builder.HorizontalFill">
+            <summary>
+            Gets the horizontal fillers in the graph.
+            </summary>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.NewInstance">
+            <summary>
+            Returns a new Builder instance.
+            </summary>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.AddLine(System.Collections.Generic.List{System.Single},Pidify.Utils.LineInfo)">
+            <summary>
+            Adds a line with the specified line information.
+            </summary>
+            <param name="points">the values</param>
+            <param name="line">the design</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if any argument is null or points contain less than 2 values</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.AddLine(System.Collections.Generic.List{System.Single},Pidify.Utils.LineInfo,System.Collections.Generic.List{System.Tuple{System.Int32,System.Drawing.Bitmap}})">
+            <summary>
+            Adds a line with the specified line information.
+            </summary>
+            <param name="points">the values</param>
+            <param name="line">the design</param>
+            <param name="lineMarkers">marker above the line; (point index, image)</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if any arguments is null or points contain less than 2 values</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.SetAxisMarkers(System.Int32,System.Int32)">
+            <summary>
+            Sets the numerical markers on the x and y axis.
+            </summary>
+            <param name="numAxisX">number of markers on x axis</param>
+            <param name="numAxisY">number of markers on y axis</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if any argument is negative</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.SetGrid(Pidify.Utils.LineInfo,System.Int32)">
+            <summary>
+            Sets a grid in the graph with automatic number of horizontal lines to make a grid of squares.
+            <para>
+            Note that the last call to any AddGrid method is applied, rest is ignored.
+            </para>
+            </summary>
+            <param name="grid">the grid lines information</param>
+            <param name="numVertical">number of vertical lines</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if grid is null</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.SetGrid(Pidify.Utils.LineInfo,System.Int32,System.Int32)">
+            <summary>
+            Sets a grid in the graph.
+            <para>
+            Note that the last call to any AddGrid method is applied, rest is ignored.
+            </para>
+            </summary>
+            <param name="grid">the grid lines information</param>
+            <param name="numVertical">number of vertical lines</param>
+            <param name="numHorizontal">number of horizontal lines</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if grid is null</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.SetGrid(Pidify.Utils.LineInfo,System.Boolean,System.Boolean)">
+            <summary>
+            Sets a grid in the graph where the vertical lines (againstMarkersX) and horizontal lines (againstMarkersY)
+            are going out from the numerical markers as set by <see cref="!:AddAxisMarkers"/>.
+            <para>
+            Note that the last call to any AddGrid method is applied, rest is ignored.
+            </para>
+            </summary>
+            <param name="grid">the grid lines information</param>
+            <param name="againstMarkersX">if vertical lines from the markers on the x axis</param>
+            <param name="againstMarkersY">if horizontal lines from the markers on the y axis</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if grid is null</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.SetBackground(System.Drawing.Color)">
+            <summary>
+            Sets a background.
+            </summary>
+            <param name="background">background color; defaults to null, meaning no background</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.SetBorder(Pidify.Utils.LineInfo)">
+            <summary>
+            Adds a border around the graph.
+            </summary>
+            <param name="border">border information; defaults to null, meaning no border</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.SetAxisLimits(System.Tuple{System.Int32,System.Int32},System.Tuple{System.Single,System.Single})">
+            <summary>
+            Adds axis limits to the graph and thus to all lines added. Note that the xAxis is indexes that acts as a "valid"
+            index window for all lines.
+            </summary>
+            <param name="xAxis">the limits on the x-axis; defaults to null, meaning to fit the lines</param>
+            <param name="yAxis">the limits on the y-axis; defaults to null, meaning to fit the lines</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if any lower limit is equal or greater than the upper limit or lower x axis limit is negative</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.AddLegend(System.String,Pidify.Utils.TextInfo,System.Single,System.Single)">
+            <summary>
+            Adds a legend to the graph.
+            </summary>
+            <param name="text">the text</param>
+            <param name="info">the text display info</param>
+            <param name="startX">the start x position of the top left corner</param>
+            <param name="startY">the start y position of the top left corner</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if text or info is null or startX or startY not in 0,1 interval</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.AddHorizontalLine(Pidify.Utils.LineInfo,System.Single,System.String)">
+            <summary>
+            Adds a horizontal line across the graph.
+            </summary>
+            <param name="line">the line</param>
+            <param name="yValue">the y value to start the line it</param>
+            <param name="text">the marker to the left of the line</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if line is null</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.AddVerticalLine(Pidify.Utils.LineInfo,System.Int32,System.String)">
+            <summary>
+            Adds a vertical line across the graph.
+            </summary>
+            <param name="line">the line</param>
+            <param name="xValue">the x value to start the line at</param>
+            <param name="text">the marker below the line</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if line is null</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.SetHorizontalFill(System.Single,System.Single,System.Drawing.Color)">
+            <summary>
+            Fills the rectangle in the graph as specified by the two y-values.
+            </summary>
+            <param name="fromYValue">the lower y value</param>
+            <param name="toYValue">the upper y value</param>
+            <param name="color">the color</param>
+            <returns>this Builder for chaining</returns>
+            <exception cref="T:System.ArgumentException">if color is null or fromYValue is equal or greater than toYValue</exception>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Builder.Build">
+            <summary>
+            Returns a new  <see cref="T:Pidify.Plottables.GraphPlottable"/> instance from this Builder.
+            </summary>
+            <returns>new GraphPlottable instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.#ctor(Pidify.Plottables.GraphPlottable.Builder)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="builder">the builder instance</param>
+        </member>
+        <member name="M:Pidify.Plottables.GraphPlottable.Plot(Pidify.ICanvas)">
+            <inheritdoc cref="T:Pidify.ICanvas"/>
+        </member>
+        <member name="T:Pidify.Plottables.ImagePlottable">
+            <summary>
+            Plots an image.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.ImageFile">
+            <summary>
+            Gets the path to the image, can be null.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.PngImage">
+            <summary>
+            Gets the PNG image as a bitmap, can be null.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.Scale">
+            <summary>
+            Gets the scale type.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.ImageBox">
+            <summary>
+            Gets the box where the image is drawn.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.Gravity">
+            <summary>
+            Gets the gravity applied.
+            </summary>
+        </member>
+        <member name="T:Pidify.Plottables.ImagePlottable.Builder">
+            <summary>
+            Builder class to create <see cref="T:Pidify.Plottables.ImagePlottable"/> instances.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.Builder.ImageFile">
+            <summary>
+            Gets the path to the image, can be null.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.Builder.PngImage">
+            <summary>
+            Gets the PNG image as a bitmap, can be null.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.Builder.Scale">
+            <summary>
+            Gets the scale type.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.Builder.ImageBox">
+            <summary>
+            Gets the box where the image is drawn.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.ImagePlottable.Builder.Gravity">
+            <summary>
+            Gets the gravity applied.
+            </summary>
+        </member>
+        <member name="M:Pidify.Plottables.ImagePlottable.Builder.#ctor(System.String)">
+            <summary>
+            Private constructor
+            </summary>
+            <param name="imageFile">the path to the image</param>
+        </member>
+        <member name="M:Pidify.Plottables.ImagePlottable.Builder.#ctor(System.Drawing.Bitmap)">
+            <summary>
+            Private constructor
+            </summary>
+            <param name="pngImage">the PNG as bitmap</param>
+        </member>
+        <member name="M:Pidify.Plottables.ImagePlottable.Builder.NewInstance(System.String)">
+            <summary>
+            Creates a new Builder instance with the image at the given path.
+            </summary>
+            <param name="imageFile">the path to the image</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.ImagePlottable.Builder.NewInstance(System.Drawing.Bitmap)">
+            <summary>
+            Creates a new Builder instance with the PNG as a bitmap.
+            </summary>
+            <param name="pngImage">the PNG as a bitmap</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.ImagePlottable.Builder.SetScale(Pidify.Utils.ScaleType)">
+            <summary>
+            Sets the scale of the image inside the canvas. This is the same as calling <see cref="!:AddScale(ScaleType,PointPair)"/>
+            with a maximum <see cref="T:Pidify.Utils.PointPair"/>.
+            <para>
+            Defaults to <see cref="F:Pidify.Utils.ScaleType.Fill"/> with maximum <see cref="T:Pidify.Utils.PointPair"/>.
+            </para>
+            </summary>
+            <param name="scale">the scale type to apply</param>
+            <returns></returns>
+        </member>
+        <member name="M:Pidify.Plottables.ImagePlottable.Builder.SetScale(Pidify.Utils.ScaleType,Pidify.Utils.PointPair)">
+            <summary>
+            Sets the scale of the image inside the specified image box.
+            <para>
+            Defaults to <see cref="F:Pidify.Utils.ScaleType.Fill"/> with maximum <see cref="T:Pidify.Utils.PointPair"/>.
+            </para>
+            </summary>
+            <param name="scale">the scale type to apply</param>
+            <param name="imageBox">the box to apply scale typ inside</param>
+            <returns></returns>
+        </member>
+        <member name="M:Pidify.Plottables.ImagePlottable.Builder.SetGravity(Pidify.Utils.GravityType,Pidify.Utils.GravityType[])">
+            <summary>
+            Sets gravity of the image on the canvas it is plotted on.
+            <para>
+            Defaults to <see cref="F:Pidify.Utils.GravityType.None"/>.
+            </para>
+            </summary>
+            <param name="gravityType">first gravity</param>
+            <param name="gravityTypes">rest of gravity types</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.ImagePlottable.Builder.Build">
+            <summary>
+            Returns a new <see cref="T:Pidify.Plottables.ImagePlottable"/> from this Builder instance.
+            </summary>
+            <returns>new ImagePlottable</returns>
+        </member>
+        <member name="M:Pidify.Plottables.ImagePlottable.Plot(Pidify.ICanvas)">
+            <inheritdoc cref="T:Pidify.IPlottable"/>
+        </member>
+        <member name="T:Pidify.Plottables.LinePlottable">
+            <summary>
+            Plots a line.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.LinePlottable.Line">
+            <summary>
+            Property for the line.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.LinePlottable.Info">
+            <summary>
+            Property for the line info.
+            </summary>
+        </member>
+        <member name="M:Pidify.Plottables.LinePlottable.#ctor(Pidify.Utils.PointPair,Pidify.Utils.LineInfo)">
+            <summary>
+            Private constructor
+            </summary>
+            <param name="line">the line</param>
+            <param name="info">the line info</param>
+        </member>
+        <member name="M:Pidify.Plottables.LinePlottable.NewInstance(Pidify.Utils.PointPair,Pidify.Utils.LineInfo)">
+            <summary>
+            Creates a new LinePlottable.
+            </summary>
+            <param name="line">the line</param>
+            <param name="info">the line info</param>
+            <returns>new LinePlottable instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.LinePlottable.Plot(Pidify.ICanvas)">
+            <summary>
+            Plots this LinePlottable on the <see cref="T:Pidify.ICanvas"/>.
+            </summary>
+            <param name="canvas">the canvas to plot on</param>
+        </member>
+        <member name="T:Pidify.Plottables.SignaturePlottable">
+            <summary>
+            Plots a signature line and a subtitle below.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.LineWidth">
+            <summary>
+            The width of the signature line.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.Subtitle">
+            <summary>
+            The subtitle below the line.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.LineInfo">
+            <summary>
+            The line info of the signature line.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.TextInfo">
+            <summary>
+            The text info of the subtitle.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.StartAt">
+            <summary>
+            The start position of the signature line.
+            </summary>
+        </member>
+        <member name="T:Pidify.Plottables.SignaturePlottable.Builder">
+            <summary>
+            Builder class to create <see cref="T:Pidify.Plottables.SignaturePlottable"/> instances.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.Builder.LineWidth">
+            <summary>
+            The width of the signature line.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.Builder.Subtitle">
+            <summary>
+            The subtitle below the line.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.Builder.LineInfo">
+            <summary>
+            The line info of the signature line.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.Builder.TextInfo">
+            <summary>
+            The text info of the subtitle.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.SignaturePlottable.Builder.StartAt">
+            <summary>
+            The start position of the signature line.
+            </summary>
+        </member>
+        <member name="M:Pidify.Plottables.SignaturePlottable.Builder.#ctor(System.Single,System.String)">
+            <summary>
+            Private constructor.
+            </summary>
+            <param name="lineWidth">the width of the line</param>
+            <param name="subtitle">the subtitle below</param>
+        </member>
+        <member name="M:Pidify.Plottables.SignaturePlottable.Builder.NewInstance(System.Single,System.String)">
+            <summary>
+            Returns a new Builder instance.
+            </summary>
+            <param name="lineWidth">the width of the line</param>
+            <param name="subtitle">the subtitle below</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.SignaturePlottable.Builder.SetLineInfo(Pidify.Utils.LineInfo)">
+            <summary>
+            Sets the line info of the signature line.
+            <para>
+            Defaults to a filled .5 thickness line with RGB(66, 66, 66).
+            </para>
+            </summary>
+            <param name="lineInfo">the line info</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.SignaturePlottable.Builder.SetTextInfo(Pidify.Utils.TextInfo)">
+            <summary>
+            Sets the text info of the subtitle.
+            <para>
+            Defaults to black Helvetica with font size 8.
+            </para>
+            </summary>
+            <param name="textInfo">the text info</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.SignaturePlottable.Builder.SetStartAt(System.Single,System.Single)">
+            <summary>
+            Sets the start position of the signature line by the upper left corner.
+            <para>
+            Defaults to 0, 0.
+            </para>
+            </summary>
+            <param name="x">the x position of the upper left corner</param>
+            <param name="y">the y position of the upper left corner</param>
+            <returns></returns>
+        </member>
+        <member name="M:Pidify.Plottables.SignaturePlottable.Builder.Build">
+            <summary>
+            Creates a new <see cref="T:Pidify.Plottables.SignaturePlottable"/> from this Builder.
+            </summary>
+            <returns>new SignaturePlottable instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.SignaturePlottable.#ctor(Pidify.Plottables.SignaturePlottable.Builder)">
+            <summary>
+            Private constructor.
+            </summary>
+            <param name="builder">the Builder instance</param>
+        </member>
+        <member name="M:Pidify.Plottables.SignaturePlottable.Plot(Pidify.ICanvas)">
+            <inheritdoc cref="T:Pidify.IPlottable"/>
+        </member>
+        <member name="T:Pidify.Plottables.TextPlottable">
+            <summary>
+            Plots a text string.
+            <para>
+            See <see cref="T:Pidify.Plottables.TextPlottable.Builder"/> for how the different placement arguments affect the location of the image.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.Text">
+            <summary>
+            The text plotted.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.TextInfo">
+            <summary>
+            Gets the visual information.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.StartAt">
+            <summary>
+            Gets the start position, upper left corner, of the text, can be null.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.Gravity">
+            <summary>
+            Gets the gravity.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.CenterIn">
+            <summary>
+            Gets the box the text is centered inside, can be null.
+            </summary>
+        </member>
+        <member name="T:Pidify.Plottables.TextPlottable.Builder">
+            <summary>
+            Builder class to create <see cref="T:Pidify.Plottables.TextPlottable"/> instances.
+            <para>
+            There are three methods which controls the positioning of the text, <see cref="M:Pidify.Plottables.TextPlottable.Builder.SetStartAt(System.Single,System.Single)"/>, <see cref="M:Pidify.Plottables.TextPlottable.Builder.SetGravity(Pidify.Utils.GravityType,Pidify.Utils.GravityType[])"/> and <see cref="M:Pidify.Plottables.TextPlottable.Builder.SetCenterIn(Pidify.Utils.PointPair)"/>.
+            </para>
+            <para>
+            <see cref="M:Pidify.Plottables.TextPlottable.Builder.SetStartAt(System.Single,System.Single)"/> takes precedence over the others.
+            </para>
+            <para>
+            <see cref="M:Pidify.Plottables.TextPlottable.Builder.SetGravity(Pidify.Utils.GravityType,Pidify.Utils.GravityType[])"/> gravitates the text from the supplied x and y or on the box supplied to <see cref="M:Pidify.Plottables.TextPlottable.Builder.SetCenterIn(Pidify.Utils.PointPair)"/>, otherwise it gravitates the text
+            from a centered position.
+            </para>
+            <para>
+            <see cref="M:Pidify.Plottables.TextPlottable.Builder.SetCenterIn(Pidify.Utils.PointPair)"/> simply places the text vertically and horizontally center inside the provided box.
+            </para>
+            <para>
+            Calling none of the positioning methods is the same as calling <see cref="M:Pidify.Plottables.TextPlottable.Builder.SetStartAt(System.Single,System.Single)"/> with 0, 0 as arguments.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.Builder.Text">
+            <summary>
+            The text plotted.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.Builder.TextInfo">
+            <summary>
+            Gets the visual information.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.Builder.StartAt">
+            <summary>
+            Gets the start position, upper left corner, of the text, can be null.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.Builder.Gravity">
+            <summary>
+            Gets the gravity.
+            </summary>
+        </member>
+        <member name="P:Pidify.Plottables.TextPlottable.Builder.CenterIn">
+            <summary>
+            Gets the box the text is centered inside, can be null.
+            </summary>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.#ctor(System.String,Pidify.Utils.TextInfo)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="text"></param>
+            <param name="textInfo"></param>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.NewInstance(System.String,Pidify.Utils.TextInfo)">
+            <summary>
+            Returns a new Builder instance.
+            </summary>
+            <param name="text">the text</param>
+            <param name="textInfo">the text information</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.NewPidifyVersionInstance(Pidify.Utils.TextInfo)">
+            <summary>
+            Returns a new Builder with Pidifys version of the form: "vMAJOR.MINOR.PATCH" where
+            MAJOR = Major, MINOR = Minor and PATCH = Build.
+            </summary>
+            <param name="textInfo">the text information</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.NewPidifyVersionInstance(Pidify.Utils.TextInfo,System.String)">
+            <summary>
+            Returns a new Builder with Pidifys version of the form: "vMAJOR.MINOR.PATCH" where
+            MAJOR = Major, MINOR = Minor and PATCH = Build.
+            </summary>
+            <param name="textInfo">the text information</param>
+            <param name="prefix">the prefix added before the version</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.NewCallingVersionInstance(Pidify.Utils.TextInfo)">
+            <summary>
+            Returns a new Builder with the callings Assembly version of the form: "vMAJOR.MINOR.PATCH" where
+            MAJOR = Major, MINOR = Minor and PATCH = Build.
+            </summary>
+            <param name="textInfo">the text information</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.NewCallingVersionInstance(Pidify.Utils.TextInfo,System.String)">
+            <summary>
+            Returns a new Builder with the callings Assembly version of the form: "vMAJOR.MINOR.PATCH" where
+            MAJOR = Major, MINOR = Minor and PATCH = Build.
+            </summary>
+            <param name="textInfo">the text information</param>
+            <param name="prefix">the prefix added before the version</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.NewVersionInstance(System.Version,Pidify.Utils.TextInfo,System.String)">
+            <summary>
+            Returns a new Builder for the version of the form: "vMAJOR.MINOR.PATCH" where
+            MAJOR = Major, MINOR = Minor and PATCH = Build.
+            </summary>
+            <param name="version">the version</param>
+            <param name="textInfo">the text information</param>
+            <param name="prefix">the prefix added before the version</param>
+            <returns>new Builder instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.SetStartAt(System.Single,System.Single)">
+            <summary>
+            Starts the top left corner of the text at the specified coordinate.
+            </summary>
+            <param name="x">the x position</param>
+            <param name="y">the y position</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.SetGravity(Pidify.Utils.GravityType,Pidify.Utils.GravityType[])">
+            <summary>
+            Gravitates the text according to the specified gravity strategy.
+            </summary>
+            <param name="gravityType">the gravity strategy</param>
+            <param name="gravityTypes">combined with these gravities</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.SetCenterIn(Pidify.Utils.PointPair)">
+            <summary>
+            Centers the text inside the specified box.
+            <para>
+            Note: this might result in a <see cref="T:System.ArgumentException"/> in the <see cref="M:Pidify.IPlottable.Plot(Pidify.ICanvas)"/> method
+            if the text cannot fit in the box.
+            </para>
+            </summary>
+            <param name="box">the box</param>
+            <returns>this Builder for chaining</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Builder.Build">
+            <summary>
+            Returns the text plottable from this Builder.
+            </summary>
+            <returns>new TextPlottable instance</returns>
+        </member>
+        <member name="M:Pidify.Plottables.TextPlottable.Plot(Pidify.ICanvas)">
+            <inheritdoc cref="T:Pidify.IPlottable"/>
+        </member>
+        <member name="M:Pidify.Utils.FileUtil.CanReadFile(System.String)">
+            <summary>
+            Returns if a file can be read or not.
+            Note that it doesn't guarantee that the file can be read too after this call.
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Pidify.Utils.FileUtil.IsImageFile(System.String)">
+            <summary>
+            Returns true if the given file no matter the extension
+            is an image.
+            </summary>
+            <param name="filename">file to test</param>
+            <returns>true if the content of the file is an image, false otherwise</returns>
+        </member>
+        <member name="T:Pidify.Utils.GravityType">
+            <summary>
+            Defines different type of gravity strategies for a box inside a parent box that can be combined using the OR operator.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.GravityType.None">
+            <summary>
+            No gravity.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.GravityType.Top">
+            <summary>
+            Gravities to the top.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.GravityType.Bottom">
+            <summary>
+            Gravities to the bottom.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.GravityType.Left">
+            <summary>
+            Gravities to the left.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.GravityType.Right">
+            <summary>
+            Gravities to the right.
+            </summary>
+        </member>
+        <member name="T:Pidify.Utils.LineInfo">
+            <summary>
+            Container type for the visual properties of a line.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.LineInfo.Default">
+            <summary>
+            Solid black line with thickness 1.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.LineInfo.DefaultDashed">
+            <summary>
+            25% dashed black line with thickness 0.5.
+            </summary>
+        </member>
+        <member name="M:Pidify.Utils.LineInfo.#ctor(System.Drawing.Color,System.Single,System.Single)">
+            <summary>
+            Private constructor
+            </summary>
+            <param name="color">the color</param>
+            <param name="thickness">the thickness</param>
+            <param name="unitsOn">the percentage filled</param>
+        </member>
+        <member name="M:Pidify.Utils.LineInfo.NewInstance(System.Drawing.Color)">
+            <summary>
+            Returns a new <see cref="T:Pidify.Utils.LineInfo"/> instance.
+            <para>
+            Same as calling <see cref="M:Pidify.Utils.LineInfo.NewInstance(System.Drawing.Color,System.Single,System.Single)"/> with thickness = 1f and unitsOn = 1f.
+            </para>
+            </summary>
+            <param name="color">the color of the line</param>
+            <returns>a new LineInfo instance</returns>
+        </member>
+        <member name="M:Pidify.Utils.LineInfo.NewInstance(System.Drawing.Color,System.Single)">
+            <summary>
+            Returns a new <see cref="T:Pidify.Utils.LineInfo"/> instance.
+            <para>
+            Same as calling <see cref="M:Pidify.Utils.LineInfo.NewInstance(System.Drawing.Color,System.Single,System.Single)"/> with unitsOn = 1f.
+            </para>
+            </summary>
+            <param name="color">the color of the line</param>
+            <param name="thickness">the thickness of the line</param>
+            <returns>a new LineInfo instance</returns>
+        </member>
+        <member name="M:Pidify.Utils.LineInfo.NewInstance(System.Drawing.Color,System.Single,System.Single)">
+            <summary>
+            Returns a new <see cref="T:Pidify.Utils.LineInfo"/> instance.
+            </summary>
+            <param name="color">the color of the line</param>
+            <param name="thickness">the thickness of the line</param>
+            <param name="unitsOn">percentage of line filled, rest is space (dash); 0-1</param>
+            <returns>a new LineInfo instance</returns>
+        </member>
+        <member name="M:Pidify.Utils.PointPair.Split(System.Int32,System.Int32,System.Single,System.Single)">
+            <summary>
+            Splits this PointPair into rows and columns with a internal padding between the boxes.
+            </summary>
+            <param name="rows">number of rows</param>
+            <param name="cols">number of columns</param>
+            <param name="horizontalPadding">padding between boxes horizontally</param>
+            <param name="verticalPadding">padding between boxes vertically</param>
+            <returns>array indexes by row then column containing the split boxes</returns>
+        </member>
+        <member name="M:Pidify.Utils.PointPair.Move(System.Single,System.Single)">
+            <summary>
+            Returns a new <see cref="T:Pidify.Utils.PointPair"/> which is moved x units on the x-axis and y units on the y axis.
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns>new PointPair instance</returns>
+        </member>
+        <member name="T:Pidify.Utils.ScaleType">
+            <summary>
+            Defines different type of scaling strategies inside a box.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.ScaleType.Fill">
+            <summary>
+            Fills with no regard to the width-height ratio.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.ScaleType.FitCenter">
+            <summary>
+            Maximizes the width or height while respecting the width-height ratio either vertical or horizontal center.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.ScaleType.FitStart">
+            <summary>
+            Maximizes the width or height while respecting the width-height ratio either top or left.
+            </summary>
+        </member>
+        <member name="F:Pidify.Utils.ScaleType.FitEnd">
+            <summary>
+            Maximizes the width or height while respecting the width-height ratio either bottom or right.
+            </summary>
+        </member>
+        <member name="T:Pidify.Utils.TextInfo">
+            <summary>
+            Container type for the visual properties of text.
+            </summary>
+        </member>
+        <member name="P:Pidify.Utils.TextInfo.Type">
+            <summary>
+            The type of the font.
+            </summary>
+        </member>
+        <member name="P:Pidify.Utils.TextInfo.Size">
+            <summary>
+            The size of the font.
+            </summary>
+        </member>
+        <member name="P:Pidify.Utils.TextInfo.Color">
+            <summary>
+            The color.
+            </summary>
+        </member>
+        <member name="P:Pidify.Utils.TextInfo.Style">
+            <summary>
+            The style of the font.
+            </summary>
+        </member>
+        <member name="M:Pidify.Utils.TextInfo.#ctor(Pidify.Utils.FontType,System.Single,System.Drawing.Color,System.Drawing.FontStyle)">
+            <summary>
+            Private constructor.
+            </summary>
+            <param name="type">the type</param>
+            <param name="size">the font size</param>
+            <param name="color">the color</param>
+            <param name="style">the style</param>
+        </member>
+        <member name="M:Pidify.Utils.TextInfo.NewInstance(Pidify.Utils.FontType,System.Single)">
+            <summary>
+            Returns a new <see cref="T:Pidify.Utils.TextInfo"/> instance.
+            <para>
+            Same as calling <see cref="M:Pidify.Utils.TextInfo.NewInstance(Pidify.Utils.FontType,System.Single,System.Drawing.Color,System.Drawing.FontStyle)"/> with color = BLACK and style = <see cref="F:System.Drawing.FontStyle.Regular"/>.
+            </para>
+            </summary>
+            <param name="type">the font type</param>
+            <param name="size">the font size</param>
+            <returns>a new TextInfo instance</returns>
+        </member>
+        <member name="M:Pidify.Utils.TextInfo.NewInstance(Pidify.Utils.FontType,System.Single,System.Drawing.Color)">
+            <summary>
+            Returns a new <see cref="T:Pidify.Utils.TextInfo"/> instance.
+            <para>
+            Same as calling <see cref="M:Pidify.Utils.TextInfo.NewInstance(Pidify.Utils.FontType,System.Single,System.Drawing.Color,System.Drawing.FontStyle)"/> with style = <see cref="F:System.Drawing.FontStyle.Regular"/>.
+            </para>
+            </summary>
+            <param name="type">the font type</param>
+            <param name="size">the font size</param>
+            <param name="color">the color of the text</param>
+            <returns>a new TextInfo instance</returns>
+        </member>
+        <member name="M:Pidify.Utils.TextInfo.NewInstance(Pidify.Utils.FontType,System.Single,System.Drawing.Color,System.Drawing.FontStyle)">
+            <summary>
+            Returns a new <see cref="T:Pidify.Utils.TextInfo"/> instance.
+            </summary>
+            <param name="type">the font type</param>
+            <param name="size">the font size</param>
+            <param name="color">the color of the text</param>
+            <param name="style">the font style</param>
+            <returns>a new TextInfo instance</returns>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.#ctor">
+            <summary>
+            Suppressed constructor
+            </summary>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.IsNull(System.Object)">
+            <summary>
+            Returns true if the given argument is null.
+            </summary>
+            <param name="obj">object to test</param>
+            <returns>true if obj == null, false otherwise</returns>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.NonNull(System.Object)">
+            <summary>
+            Returns true if the given argument is not null.
+            </summary>
+            <param name="obj">object to test</param>
+            <returns>true if obj != null, false otherwise</returns>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.RequireFileExist(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Throws an <see cref="T:System.ArgumentException"/> if the given file does not exist.
+            </summary>
+            <param name="file">file to test</param>
+            <param name="methodName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+            <exception cref="T:System.ArgumentException">if the file does not exist</exception>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.RequireImageFile(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Throws an <see cref="T:System.ArgumentException"/> if the given file does not exist or is not an image file.
+            </summary>
+            <param name="file">file to test</param>
+            <param name="methodName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+            <exception cref="T:System.ArgumentException">if the file does not exist</exception>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.RequireNonNull``1(``0,System.String,System.String,System.Int32)">
+            <summary>
+            Returns the object if it is not null or throws an <see cref="T:System.ArgumentException"/>.
+            </summary>
+            <typeparam name="T">object type</typeparam>
+            <param name="obj">object to test</param>
+            <param name="methodName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+            <returns>obj</returns>
+            <exception cref="T:System.ArgumentException">if obj == null</exception>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.RequireTrue(System.Boolean,System.Object,System.String,System.String,System.Int32)">
+            <summary>
+            Throws an <see cref="T:System.ArgumentException"/> if the value is false.
+            </summary>
+            <param name="val">value to test</param>
+            <param name="message">exception message</param>
+            <param name="methodName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+            <exception cref="T:System.ArgumentException">if val == false</exception>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.RequireNonNegative(System.Int32,System.Object,System.String,System.String,System.Int32)">
+            <summary>
+            Returns the given value if it is greater than or equal to zero (<code>val >= 0</code>)
+            or throws <see cref="T:System.ArgumentException"/>.
+            </summary>
+            <param name="val"></param>
+            <param name="message"></param>
+            <param name="methodName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+            <returns>val</returns>
+            <exception cref="T:System.ArgumentException">if val &lt; 0</exception>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.RequireNonNegative(System.Double,System.Object,System.String,System.String,System.Int32)">
+            <summary>
+            Returns the given value if it is greater than or equal to zero (<code>val >= 0</code>)
+            or throws <see cref="T:System.ArgumentException"/>.
+            </summary>
+            <param name="val"></param>
+            <param name="message"></param>
+            <param name="methodName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+            <returns>val</returns>
+            <exception cref="T:System.ArgumentException">if val &lt; 0</exception>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.RequirePositive(System.Int32,System.Object,System.String,System.String,System.Int32)">
+            <summary>
+            Returns the given value if it is greater than zero (<code>val > 0</code>)
+            or throws an <see cref="T:System.ArgumentException"/>.
+            </summary>
+            <param name="val"></param>
+            <param name="message"></param>
+            <param name="methodName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+            <returns>val</returns>
+            <exception cref="T:System.ArgumentException">if val &lt;= 0</exception>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.RequirePositive(System.Double,System.Object,System.String,System.String,System.Int32)">
+            <summary>
+            Returns the given value if it is greater than zero (<code>val > 0</code>)
+            or throws an <see cref="T:System.ArgumentException"/>.
+            </summary>
+            <param name="val"></param>
+            <param name="message"></param>
+            <param name="methodName"></param>
+            <param name="fileName"></param>
+            <param name="lineNumber"></param>
+            <returns>val</returns>
+            <exception cref="T:System.ArgumentException">if val &lt;= 0</exception>
+        </member>
+        <member name="M:Pidify.Utils.ValidationUtil.ThrowArgumentException(System.Object,System.String,System.String,System.Int32)">
+            <summary>
+            Throws an argument exception.
+            </summary>
+            <param name="message">message</param>
+            <param name="methodName">the name of the method received through caller info attribute</param>
+            <param name="fileName">the filename received through caller info attribute</param>
+            <param name="lineNumber">the line number as received through caller info attribute</param>
+            <exception cref="T:System.ArgumentException">always</exception>
+        </member>
+    </members>
+</doc>
